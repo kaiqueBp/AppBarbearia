@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "39215645037",
+    "project_id": "appbarber-10f93",
+    "storage_bucket": "appbarber-10f93.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:39215645037:android:e9b34c13e122dc3d395a64",
+        "android_client_info": {
+          "package_name": "com.Kaique.appbarber"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB2HAJMg7Ku8Lb557ef0n3w6AwIouHQN08"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
