@@ -6,6 +6,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -21,6 +22,7 @@ import com.google.android.gms.common.SignInButton;
 import com.google.android.gms.common.api.ApiException;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.auth.AuthCredential;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
@@ -62,27 +64,34 @@ public class LoginActivity2 extends AppCompatActivity {
         botao.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                mAuth.signInWithEmailAndPassword(email.getText().toString(), senha.getText().toString())
-                        .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
-                            @Override
-                            public void onComplete(@NonNull Task<AuthResult> task) {
-                                if (task.isSuccessful()) {
-                                    // Sign in success, update UI with the signed-in user's information
-                                    // Log.d(TAG, "signInWithCustomToken:success");
-                                    Toast.makeText(getApplicationContext(), "Login efetuado com Sucesso", Toast.LENGTH_SHORT).show();
-                                    FirebaseUser user = mAuth.getCurrentUser();
-                                    telaprincipal();
-                                    finish();
-                                    // updateUI(user);
-                                } else {
-                                    // If sign in fails, display a message to the user.
-                                    //Log.w(TAG, "signInWithCustomToken:failure", task.getException());
-                                    Toast.makeText(getApplicationContext(), "Erro ao efetuar o Login", Toast.LENGTH_SHORT).show();
-                                    // updateUI(null);
+                if(email.getText().toString().isEmpty() || senha.getText().toString().isEmpty()){
+                    Toast.makeText(getApplicationContext(), "Preencha todos os campos!!!",Toast.LENGTH_SHORT).show();
+                }else {
+                    mAuth.signInWithEmailAndPassword(email.getText().toString(), senha.getText().toString())
+                            .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+                                @Override
+                                public void onComplete(@NonNull Task<AuthResult> task) {
+                                    if (task.isSuccessful()) {
+                                        // Sign in success, update UI with the signed-in user's information
+                                        // Log.d(TAG, "signInWithCustomToken:success");
+                                        Snackbar snackbar = Snackbar.make(view,"Salvo com sucesso", Snackbar.LENGTH_SHORT);
+                                        snackbar.setBackgroundTint(Color.BLUE);
+                                        snackbar.show();
+                                        FirebaseUser user = mAuth.getCurrentUser();
+                                        telaprincipal();
+                                        finish();
+                                        // updateUI(user);
+                                    } else {
+                                        // If sign in fails, display a message to the user.
+                                        //Log.w(TAG, "signInWithCustomToken:failure", task.getException());
+                                        Snackbar snackbar = Snackbar.make(view,"Salvo com sucesso", Snackbar.LENGTH_SHORT);
+                                        snackbar.setBackgroundTint(Color.RED);
+                                        snackbar.show();
+                                        // updateUI(null);
+                                    }
                                 }
-                            }
-                        });
-
+                            });
+                }
             }
         });
 

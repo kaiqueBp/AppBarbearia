@@ -1,5 +1,6 @@
 package com.Kaique.appbarber;
 
+import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -13,6 +14,7 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -56,12 +58,20 @@ public class MainActivity extends AppCompatActivity {
 
     public void salvar(View view){
         Pessoa p = new Pessoa();
-        p.setNome(nome.getText().toString());
-        p.setTelefone(telefone.getText().toString());
-        p.setAvaliacao(String.valueOf(avaliacao.getRating()));
-        DatabaseReference pessoas = databaseReference.child("pessoas");
-        pessoas.push().setValue(p);
-        Toast.makeText(getApplicationContext(),"Salvo",Toast.LENGTH_SHORT).show();
+        if(nome.getText().toString().isEmpty() || telefone.getText().toString().isEmpty() || String.valueOf(avaliacao.getRating()).isEmpty()){
+            Toast.makeText(getApplicationContext(),"Preencha todos os campos!!",Toast.LENGTH_SHORT).show();
+        }else {
+            p.setNome(nome.getText().toString());
+            p.setTelefone(telefone.getText().toString());
+            p.setAvaliacao(String.valueOf(avaliacao.getRating()));
+
+            DatabaseReference pessoas = databaseReference.child("pessoas");
+            pessoas.push().setValue(p);
+            Snackbar snackbar = Snackbar.make(view,"Salvo com sucesso", Snackbar.LENGTH_SHORT);
+            snackbar.setBackgroundTint(Color.BLUE);
+            snackbar.show();
+            limpaCampos();
+        }
     }
     public void ler(){
         DatabaseReference pessoas = databaseReference.child("pessoas");
@@ -88,4 +98,9 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
+    public void limpaCampos(){
+        nome.setText("");
+        telefone.setText("");
+        avaliacao.setRating(0);
+    }
 }
